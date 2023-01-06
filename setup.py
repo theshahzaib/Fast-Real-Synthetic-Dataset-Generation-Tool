@@ -5,10 +5,13 @@ from PIL import Image
 from generate_labels import pascal_voc_to_yolo
 import PySimpleGUI as sg
 import shutil
+import datetime as dt
+from tqdm import tqdm
 
 global coordinates, fore_g_image, dir_fg_img, list_, list_bg_img,obj_pt, fh, fw, dir_fg_img_list
 coordinates = []
 list_bg_img = []
+date_time_id = dt.datetime.now().strftime("%d%m%y%H%M")
 
 def background_img_copy(bg_images, len_images):
     # print('len_images............', len_images)
@@ -26,9 +29,6 @@ def popup_wind():
                     [sg.Text("Object Path:")],
                     [sg.InputText(key='inputxt'), sg.FileBrowse()],
                     
-                    # [sg.Text("Tajas")],
-                    # [ sg.InputText(key='inputxt4'), sg.FileBrowse()],
-                    
                     [sg.Button('Ok'), sg.Button('Cancel')]
                     ]
     # Set dimensions of the window
@@ -37,7 +37,6 @@ def popup_wind():
     window.close()
     
     dir_ = values['inputxt']
-    # Tejas_dir = values['inputxt4']
     return [dir_]
 
 list_ = []
@@ -46,7 +45,8 @@ def coordinates_on_click(event, x, y, flags, params, offset=5, object_dim=[40,40
     if event == cv2.EVENT_LBUTTONDOWN:
         font = cv2.FONT_HERSHEY_SIMPLEX
         
-        cv2.putText(bg_images_, str('.'), ((x-4),y), font, 1, (255, 255, 0), 2)
+        # cv2.putText(bg_images_, str('.'), ((x-4),y), font, 1, (255, 255, 0), 2)
+        cv2.putText(bg_images_, str('.'), (x-5,y), font, 1, (255, 255, 0), 6)
         #cv2.rectangle(bg_images_, str('.'), (x,y), font, 1, (255, 255, 0), 8)
         cv2.imshow('image', bg_images_)
         list_.append(dir_fg_img)
@@ -55,11 +55,18 @@ def coordinates_on_click(event, x, y, flags, params, offset=5, object_dim=[40,40
         for i in range(0,4):
             coordinates.append(coord)
             #coordinates.append(coord)
+
+    if event == cv2.EVENT_RBUTTONUP:
+        cv2.destroyWindow('image')
+
+# def destroy_window_button_L(event, x, y, flags, params):
+#     if event == cv2.EVENT_LBUTTONDOWN:
+#         cv2.destroyWindow('image')
         
 # index = 0
 imgs = glob.glob('Dataset/background_images/*.jpg')
 
-for bg_images in imgs:
+for bg_images in tqdm(imgs):
     dir_fg_img_list = glob.glob('Dataset/input/*/*', recursive=True)
     background_img_copy(bg_images, len(dir_fg_img_list))
     base_name = os.path.basename(bg_images)
@@ -90,31 +97,10 @@ for bg_images in imgs:
     # print("lists",lists)
     for kh in lists:
         for img, ll in zip(dir_fg_img, list_bg_img):
-            
-            #print('dir_fg_img',dir_fg_img)
-            # for ll in list_bg_img:
                 
             bg_base_name = os.path.basename(ll)
-            
-           # txt_file = open('Dataset/Dataset_output/'+bg_base_name[:-4]+'.txt', 'w')
             fg_base_name = os.path.basename(img)
             
-            # if 'Mig29' in fg_base_name:
-            #     cls = 4
-            
-            # if 'Rafale' in fg_base_name:
-            #     cls = 2
-                
-            # if 'Mirage2000' in fg_base_name:
-            #     cls = 3
-                
-            # if 'SU_30' in fg_base_name:
-            #     cls = 1
-                
-            # if 'Tejas' in fg_base_name:
-            #     cls = 0
-                
-            # print("fg_base_name", fg_base_name)
             fg_img = Image.open(img, 'r').convert("RGBA")
             bg_img = Image.open(ll, 'r').convert("RGBA")
                 
