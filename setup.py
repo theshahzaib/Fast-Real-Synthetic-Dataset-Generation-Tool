@@ -128,7 +128,9 @@ for bg_images in tqdm(imgs):
             # except:
             #     pass
             
-        list_bg_img = glob.glob('C:/Users/Shahzaib/Desktop/Doing/datageneration/senerio_3/Dataset/output/*.jpg')        
+        # list_bg_img = glob.glob('C:/Users/Shahzaib/Desktop/Doing/datageneration/senerio_3/Dataset/output/*.jpg')       
+        # list_bg_img = glob.glob('C:/Users/Shahzaib/Documents/GitHub/Fast-Real-Synthetic-Dataset-Generation-Tool/Dataset/output/*.jpg')
+        list_bg_img = glob.glob('./Dataset/output/*.jpg')
     
     for cop in list_bg_img:
         b_n = os.path.basename(cop)
