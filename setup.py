@@ -62,7 +62,11 @@ def coordinates_on_click(event, x, y, flags, params, offset=5, object_dim=[40,40
 # def destroy_window_button_L(event, x, y, flags, params):
 #     if event == cv2.EVENT_LBUTTONDOWN:
 #         cv2.destroyWindow('image')
-        
+
+# remove and create folder if exist
+if os.path.exists('Dataset/output/senerio_1'):
+    shutil.rmtree('Dataset/output/senerio_1')
+    os.mkdir('Dataset/output/senerio_1')
 # index = 0
 imgs = glob.glob('Dataset/background_images/*.jpg')
 
