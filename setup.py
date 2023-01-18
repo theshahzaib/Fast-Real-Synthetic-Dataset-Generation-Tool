@@ -67,9 +67,9 @@ if os.path.exists('Dataset/list_image'):
     os.mkdir('Dataset/list_image')
 
 # remove and create folder if exist (senario_1)
-if os.path.exists('Dataset/output/senerio_1'):
-    shutil.rmtree('Dataset/output/senerio_1')
-    os.mkdir('Dataset/output/senerio_1')
+if os.path.exists('Dataset/output/final'):
+    shutil.rmtree('Dataset/output/final')
+    os.mkdir('Dataset/output/final')
 
 
 imgs = glob.glob('Dataset/background_images/*.jpg')
@@ -150,8 +150,8 @@ try:
         
         for cop in list_bg_img:
             b_n = os.path.basename(cop)
-            os.rename(cop,'Dataset/output/senerio_1/'+b_n)
-            os.rename(cop[:-4]+'.txt', 'Dataset/output/senerio_1/'+b_n[:-4]+".txt")
+            os.rename(cop,'Dataset/output/final/'+b_n)
+            os.rename(cop[:-4]+'.txt', 'Dataset/output/final/'+b_n[:-4]+".txt")
 
 
         list_bg_img.clear()
@@ -165,13 +165,13 @@ except:
         os.mkdir('Dataset/list_image')
 
     # Post Processing Script
-    all_files = glob.glob('./Dataset/output/senerio_1/*.*')
+    all_files = glob.glob('./Dataset/output/final/*.*')
 
     # remove space from file name
     for file in all_files:
         os.rename(file, file.replace(" ", "_"))
 
-    all_files = glob.glob('Dataset/output/senerio_1/*.*')
+    all_files = glob.glob('Dataset/output/final/*.*')
     for file in tqdm(all_files, desc="Processing"):
         os.rename(file, file.replace(".", "_"+date_time_id+"."))
 
