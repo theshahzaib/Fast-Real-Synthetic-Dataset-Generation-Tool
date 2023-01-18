@@ -127,8 +127,14 @@ for bg_images in tqdm(imgs):
             bb = pascal_voc_to_yolo((kh[0][0] - (fw//2)), (kh[0][1]  - (fh//2)),
                                     (kh[0][0])+(fw//2), (kh[0][1])+ (fh//2), W, H)
             #cv2.rectangle(obj_img_cv_bgr, (kh[0][0], kh[0][1]), ((kh[0][0])+fw,(kh[0][1])+fh), (0, 0, 255), 1)
+
+            class_no = img.split('\\')[-2][0]
+            # print(img)
+            # print(class_no)
+
+
             txt_file = open('Dataset/output/'+bg_base_name[:-4]+'.txt', 'a')
-            txt_file.write("name"+" "+str(bb[0])+' '+str(bb[1])+' '+str(bb[2])+' '+str(bb[3])+'\n')
+            txt_file.write(class_no+" "+str(bb[0])+' '+str(bb[1])+' '+str(bb[2])+' '+str(bb[3])+'\n')
             txt_file.close()
 
             cv2.imwrite('Dataset/output/'+bg_base_name,obj_img_cv_bgr)
