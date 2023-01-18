@@ -70,7 +70,7 @@ if os.path.exists('Dataset/list_image'):
 if os.path.exists('Dataset/output/senerio_1'):
     shutil.rmtree('Dataset/output/senerio_1')
     os.mkdir('Dataset/output/senerio_1')
-    
+
 
 imgs = glob.glob('Dataset/background_images/*.jpg')
 
@@ -148,5 +148,9 @@ for bg_images in tqdm(imgs):
 
     list_bg_img.clear()
     dir_fg_img.clear()
-    coordinates.clear() 
+    coordinates.clear()
+
+if os.path.exists('Dataset/list_image'):
+    shutil.rmtree('Dataset/list_image')
+    os.mkdir('Dataset/list_image')
     
