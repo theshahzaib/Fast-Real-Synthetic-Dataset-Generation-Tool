@@ -158,7 +158,11 @@ try:
         dir_fg_img.clear()
         coordinates.clear()
 
+
 except:
+    pass
+
+finally:
 
     if os.path.exists('Dataset/list_image'):
         shutil.rmtree('Dataset/list_image')
